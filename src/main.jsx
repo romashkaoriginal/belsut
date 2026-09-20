@@ -1,10 +1,10 @@
 import React, {useEffect, useRef, useState} from 'react';
 import {createRoot} from 'react-dom/client';
-import {ArrowDown, ArrowRight, ArrowUpRight, Check, Code2, Menu, Network, Route, TrainFront, X} from 'lucide-react';
+import {ArrowDown, ArrowRight, ArrowUpRight, Check, Menu, Monitor, Network, Route, TrainFront, X} from 'lucide-react';
 import {programs, source} from './data';
 import './styles.css';
 
-const icons = {route: Route, rail: TrainFront, systems: Network, code: Code2};
+const icons = {route: Route, rail: TrainFront, systems: Network, code: Monitor};
 
 const External = ({href, children, className}) => <a href={href} className={className} target="_blank" rel="noreferrer">{children}<ArrowUpRight size={17}/></a>;
 
@@ -38,6 +38,25 @@ function App() {
       }
     }), {threshold: 0.14});
     document.querySelectorAll('[data-reveal]').forEach((element) => observer.observe(element));
+    return () => observer.disconnect();
+  }, []);
+
+  useEffect(() => {
+    if (matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+    const staged = [['[data-crane]', 'rigged', 'lowering'], ['.outcome', null, 'plotting']];
+    const observer = new IntersectionObserver((entries) => entries.forEach((entry) => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add(entry.target.dataset.play);
+        observer.unobserve(entry.target);
+      }
+    }), {threshold: 0.3});
+    staged.forEach(([selector, armed, play]) => {
+      const element = document.querySelector(selector);
+      if (!element) return;
+      if (armed) element.classList.add(armed);
+      element.dataset.play = play;
+      observer.observe(element);
+    });
     return () => observer.disconnect();
   }, []);
 
@@ -87,10 +106,10 @@ function App() {
           <h2 id="territory-title">Город — это<br/>не фон.</h2>
           <p>Это система, которую кто-то рассчитывает, строит и поддерживает. Выбери, за какую её часть будешь отвечать ты.</p>
         </div>
-        <div className="territory-routes" aria-label="Четыре направления">
+        <div className="territory-routes" aria-label="Четыре направления" data-reveal>
           {programs.map((item, index) => {
             const Icon = icons[item.icon];
-            return <button key={item.id} className="territory-route" onClick={() => chooseProgram(item.id)} data-reveal>
+            return <button key={item.id} className="territory-route" onClick={() => chooseProgram(item.id)}>
               <span className="route-index">0{index + 1}</span><Icon size={30} strokeWidth={1.4}/>
               <span className="route-copy"><strong>{item.label}</strong><small>{item.lead}</small></span><ArrowUpRight size={22}/>
             </button>;
@@ -143,10 +162,10 @@ function App() {
 
       <section className="experience" id="experience" aria-labelledby="experience-title">
         <div className="experience-head" data-reveal><h2 id="experience-title">Не пять лет<br/>конспектов.</h2><p>Инженер растёт не от количества лекций. Он учится видеть систему, проверять решение и отвечать за результат.</p></div>
-        <div className="experience-track">
-          <article className="experience-step theory" data-reveal><span>Младшие курсы</span><h3>Разобраться<br/>в основе.</h3><p>Математика, физика и инженерная база дают язык, на котором устроены реальные объекты.</p></article>
-          <article className="experience-step practice-step" data-reveal><span>Практика</span><h3>Проверить<br/>руками.</h3><p>Можно получить рабочую профессию и познакомиться с производством не по презентации.</p></article>
-          <article className="experience-step project" data-reveal><span>Старшие курсы</span><h3>Собрать<br/>решение.</h3><p>Курсовые и дипломные проекты связывают расчёт с задачами предприятий и инфраструктуры.</p></article>
+        <div className="experience-track" data-crane>
+          <article className="experience-step theory"><i className="rig" aria-hidden="true"><b/><b/></i><span>Младшие курсы</span><h3>Разобраться<br/>в основе.</h3><p>Математика, физика и инженерная база дают язык, на котором устроены реальные объекты.</p></article>
+          <article className="experience-step practice-step"><i className="rig" aria-hidden="true"><b/><b/></i><span>Практика</span><h3>Проверить<br/>руками.</h3><p>Можно получить рабочую профессию и познакомиться с производством не по презентации.</p></article>
+          <article className="experience-step project"><i className="rig" aria-hidden="true"><b/><b/></i><span>Старшие курсы</span><h3>Собрать<br/>решение.</h3><p>Курсовые и дипломные проекты связывают расчёт с задачами предприятий и инфраструктуры.</p></article>
         </div>
       </section>
 

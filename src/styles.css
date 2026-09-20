@@ -16,6 +16,8 @@
   --pale:#f1f4f8;
   --ease-out:cubic-bezier(.23,1,.32,1);
   --ease-in-out:cubic-bezier(.77,0,.175,1);
+  --ease-rope:cubic-bezier(.33,.06,.28,1);
+  --ease-rail:cubic-bezier(.16,.84,.24,1);
   --page-gutter:max(52px,calc((100vw - 1320px)/2));
   --section-y:clamp(104px,8vw,128px);
   --section-y-deep:clamp(116px,9vw,145px);
@@ -173,8 +175,57 @@ h1 span{color:var(--blue)}
 .project{grid-column:9/13;grid-row:2;background:var(--navy);color:#fff}
 .project p{color:#c4d3e5;border-top-color:#ffffff30}
 
+/* Crane rig: cards are lowered in on cables when the track first scrolls into view.
+   .rigged is set from JS so the section stays visible if the script never runs. */
+.rig{display:none}
+@media(prefers-reduced-motion:no-preference){
+  .experience-track.rigged{--drop:calc(-1 * (100% + var(--section-y-deep)));--cable:#8fa6c4}
+  .experience-track.rigged .experience-step{opacity:0}
+  .experience-track.rigged .rig{display:block;position:absolute;left:0;right:0;bottom:100%;height:100vh;opacity:0;pointer-events:none}
+  .experience-track.rigged .rig b{position:absolute;bottom:0;width:1px;height:100%;background:linear-gradient(to bottom,transparent,var(--cable) 12%,var(--cable));transform-origin:50% 100%;transform:scaleY(0)}
+  .experience-track.rigged .rig b:first-child{left:22%}
+  .experience-track.rigged .rig b:last-child{right:22%}
+
+  .experience-track.lowering .experience-step{animation:crane-lower 1900ms var(--ease-rope) both}
+  .experience-track.lowering .practice-step{animation-duration:1500ms}
+  .experience-track.lowering .rig{animation:rig-fade 1900ms linear both}
+  .experience-track.lowering .practice-step .rig{animation-duration:1500ms}
+  .experience-track.lowering .rig b{animation:cable-pay-out 1900ms var(--ease-rope) both}
+  .experience-track.lowering .practice-step .rig b{animation-duration:1500ms}
+}
+@keyframes crane-lower{
+  /* hangs off-screen while the empty hook is paid out */
+  0%,16%{opacity:0;transform:translateY(var(--drop))}
+  30%{opacity:1}
+  /* free travel down, then the load settles under its own weight */
+  82%{transform:translateY(0)}
+  90%{transform:translateY(5px)}
+  100%{opacity:1;transform:translateY(0)}
+}
+@keyframes cable-pay-out{
+  /* cable runs out ahead of the load, then follows it down */
+  0%{transform:scaleY(0)}
+  16%{transform:scaleY(.18)}
+  82%{transform:scaleY(1)}
+  /* goes slack the moment the load touches down, then is reeled back up */
+  88%{transform:scaleY(1)}
+  100%{transform:scaleY(0)}
+}
+@keyframes rig-fade{
+  0%{opacity:0}
+  8%,82%{opacity:1}
+  100%{opacity:0}
+}
+
 .outcome{min-height:620px;background:var(--blue);color:#fff;position:relative;overflow:hidden;padding:var(--section-y) var(--page-gutter);display:flex;align-items:flex-end}
 .outcome-word{position:absolute;top:-40px;left:50%;transform:translateX(-50%);white-space:nowrap;font-size:min(16vw,240px);line-height:1;font-weight:800;letter-spacing:-.06em;color:transparent;-webkit-text-stroke:1px #ffffff35;pointer-events:none}
+/* The outline is drawn left to right, the way a plotter would lay it down. */
+@media(prefers-reduced-motion:no-preference){
+  .outcome-word{-webkit-mask-image:linear-gradient(90deg,#000 var(--ink),transparent calc(var(--ink) + 6%));mask-image:linear-gradient(90deg,#000 var(--ink),transparent calc(var(--ink) + 6%))}
+  .outcome.plotting .outcome-word{animation:plot-ink 1400ms var(--ease-in-out) both}
+}
+@property --ink{syntax:'<percentage>';inherits:false;initial-value:0%}
+@keyframes plot-ink{from{--ink:0%}to{--ink:100%}}
 .outcome-content{width:100%;display:grid;grid-template-columns:1.15fr .85fr;gap:90px;align-items:end;position:relative;z-index:1}
 .outcome-content h2{font-size:clamp(46px,5vw,72px);line-height:1.08;font-weight:600;letter-spacing:-.04em}
 .outcome-content h2 span{color:#d6e7f3}
@@ -186,7 +237,14 @@ h1 span{color:var(--blue)}
 .admission-header h2{font-size:clamp(54px,6vw,88px);line-height:1.03;font-weight:600;letter-spacing:-.04em}
 .admission-header p{max-width:430px;color:var(--muted);font-size:14px;margin-bottom:10px}
 .admission-path{max-width:1320px;margin:clamp(64px,6vw,82px) auto 0;padding:0;list-style:none;border-top:1px solid var(--navy)}
-.admission-path li{display:grid;grid-template-columns:100px 1fr;gap:35px;border-bottom:1px solid var(--line);padding:40px 0;transition:transform 240ms var(--ease-out),background-color 180ms ease}
+.admission-path li{position:relative;display:grid;grid-template-columns:100px 1fr;gap:35px;border-bottom:1px solid var(--line);padding:40px 0;transition:transform 240ms var(--ease-out),background-color 180ms ease}
+/* Each step's rule is ruled in from the left as the step arrives. */
+@media(prefers-reduced-motion:no-preference){
+  .admission-path li{border-bottom-color:transparent}
+  .admission-path li:after{content:'';position:absolute;left:0;right:0;bottom:-1px;height:1px;background:var(--line);transform:scaleX(0);transform-origin:0 50%}
+  .admission-path li.arrived:after{animation:rule-in 560ms var(--ease-out) 120ms both}
+}
+@keyframes rule-in{from{transform:scaleX(0)}to{transform:scaleX(1)}}
 .admission-path li>span{font-size:12px;color:var(--blue);font-variant-numeric:tabular-nums;padding-top:5px}
 .admission-path li>div{display:grid;grid-template-columns:.8fr 1fr auto;align-items:start;gap:50px}
 .admission-path h3{font-size:25px;font-weight:600;letter-spacing:-.025em}
@@ -216,8 +274,17 @@ h1 span{color:var(--blue)}
   [data-reveal].arrived{animation:reveal 720ms var(--ease-out) both}
   .hero-content{animation:reveal 800ms var(--ease-out) both}
   .hero-art{animation:art-in 1100ms var(--ease-out) both}
+  /* Territory cards pull in along a rail, like stock arriving at a platform:
+     they come from the right, decelerate hard, and the rail draws in under them. */
+  .territory-routes[data-reveal]{opacity:1;transform:none;clip-path:none}
+  .territory-routes:before{content:'';position:absolute;left:0;right:0;top:50%;height:1px;background:#ffffff30;transform:scaleX(0);transform-origin:100% 50%}
+  .territory-routes.arrived{animation:none}
+  .territory-routes.arrived:before{animation:rail-draw 620ms var(--ease-out) both}
+  .territory-routes.arrived .territory-route{animation:rail-in 760ms var(--ease-rail) both}
   .territory-route:nth-child(2){animation-delay:70ms}.territory-route:nth-child(3){animation-delay:110ms}.territory-route:nth-child(4){animation-delay:150ms}
 }
+@keyframes rail-draw{from{transform:scaleX(0)}to{transform:scaleX(1)}}
+@keyframes rail-in{from{opacity:0;transform:translateX(64px)}to{opacity:1;transform:translateX(0)}}
 @keyframes reveal{to{opacity:1;transform:translateY(0);clip-path:inset(0 0 0 0)}}
 @keyframes art-in{from{opacity:0;translate:38px 16px}to{opacity:1;translate:0 0}}
 
@@ -241,6 +308,8 @@ h1 span{color:var(--blue)}
   .territory{min-height:auto;padding:var(--section-y-deep) var(--page-gutter) calc(var(--section-y-deep) + 16px);grid-template-columns:1fr;gap:65px}.territory h2{font-size:65px}.territory-intro p{max-width:530px}.territory-route:nth-child(2),.territory-route:nth-child(4){transform:translateY(20px)}
   .programs-stage{padding:var(--section-y) var(--page-gutter)}.programs-heading{align-items:flex-start;flex-direction:column;gap:25px;margin-bottom:45px}.programs-heading h2{font-size:55px}.program-browser{grid-template-columns:1fr}.program-rail{display:grid;grid-template-columns:1fr 1fr}.program-rail button{min-height:78px;border-right:1px solid #d2dce8}.program-scene{grid-template-columns:1fr}.scene-main{min-height:440px}.scene-detail{min-height:390px}.compare-row{align-items:flex-start;flex-direction:column;padding:16px 0;gap:4px}
   .experience{padding:var(--section-y-deep) var(--page-gutter)}.experience-head{grid-template-columns:1fr;gap:25px}.experience-head h2{font-size:62px}.experience-track{margin-top:70px;display:flex;flex-direction:column;gap:1px}.experience-step{min-height:290px}.practice-step,.project,.theory{transform:none}
+  /* stacked column: a crane drop would run the length of the screen, so cards just appear */
+  .experience-track.rigged .experience-step,.experience-track.lowering .experience-step{opacity:1;animation:none}.experience-track.rigged .rig{display:none}
   .outcome{min-height:0;padding:calc(var(--section-y) + 60px) var(--page-gutter) var(--section-y)}.outcome-word{top:34px;font-size:16vw}.outcome-content{grid-template-columns:1fr;gap:55px}.outcome-content h2{font-size:52px}
   .admission{padding:var(--section-y-deep) var(--page-gutter)}.admission-header{grid-template-columns:1fr;gap:28px}.admission-header h2{font-size:62px}.admission-path{margin-top:60px}.admission-path li{grid-template-columns:50px 1fr;gap:15px}.admission-path li>div{grid-template-columns:1fr;gap:15px}.admission-path a{grid-column:auto}
   .contact{min-height:700px;padding:var(--section-y) var(--page-gutter);grid-template-columns:1fr;gap:70px}.contact-main h2{font-size:74px}.contact-address{border-left:0;border-top:1px solid #ffffff38;padding:38px 0 0}
