@@ -133,9 +133,10 @@ h1 span{color:var(--blue)}
 .program-code{color:#9eb4d0;font-size:11px;font-variant-numeric:tabular-nums}
 .scene-main h3{font-size:clamp(34px,4vw,55px);line-height:1.12;font-weight:600;letter-spacing:-.035em;margin-top:34px;max-width:600px}
 .scene-main>p{color:#c5d1e1;font-size:14px;max-width:480px;margin-top:24px}
-.scene-stats{display:flex;gap:70px;margin-top:auto;padding-top:45px}
+.scene-stats{display:flex;flex-wrap:wrap;gap:32px 50px;margin-top:auto;padding-top:45px}
 .scene-stats strong{display:block;font-size:58px;line-height:1;font-weight:600;letter-spacing:-.04em;color:#8ec2e7}
 .scene-stats span{display:block;font-size:11px;color:#aebed3;margin-top:8px}
+.scene-main>.button-link{display:inline-flex;align-items:center;gap:9px;margin-top:28px;font-size:12px;font-weight:600;color:#8ec2e7}
 .scene-detail{background:#f1f4f8;padding:clamp(32px,4vw,54px);display:flex;flex-direction:column}
 .scene-title h4{font-size:24px;line-height:1.35;font-weight:600;letter-spacing:-.02em}
 .scene-title>span{display:block;color:var(--blue);font-size:12px;margin-top:12px}
@@ -161,7 +162,6 @@ h1 span{color:var(--blue)}
 .experience-head h2{font-size:clamp(54px,6vw,86px);line-height:1.03;font-weight:600;letter-spacing:-.04em}
 .experience-head p{max-width:420px;color:var(--muted);font-size:15px;margin-bottom:9px}
 .experience-track{max-width:1220px;margin:clamp(76px,7vw,104px) auto 0;display:grid;grid-template-columns:repeat(12,1fr);grid-template-rows:90px auto;position:relative}
-.experience-track:before{content:'';position:absolute;left:8%;right:8%;top:90px;height:1px;background:#99aec8;transform:rotate(-3deg);transform-origin:center}
 .experience-step{position:relative;z-index:1;min-height:340px;padding:34px;display:flex;flex-direction:column;border-radius:2px}
 .experience-step>span{font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:.09em}
 .experience-step h3{font-size:34px;line-height:1.15;font-weight:600;letter-spacing:-.03em;margin-top:28px}
@@ -174,7 +174,7 @@ h1 span{color:var(--blue)}
 .project p{color:#c4d3e5;border-top-color:#ffffff30}
 
 .outcome{min-height:620px;background:var(--blue);color:#fff;position:relative;overflow:hidden;padding:var(--section-y) var(--page-gutter);display:flex;align-items:flex-end}
-.outcome-word{position:absolute;top:30px;left:50%;transform:translateX(-50%);white-space:nowrap;font-size:min(16vw,240px);line-height:1;font-weight:800;letter-spacing:-.06em;color:transparent;-webkit-text-stroke:1px #ffffff35;pointer-events:none}
+.outcome-word{position:absolute;top:-40px;left:50%;transform:translateX(-50%);white-space:nowrap;font-size:min(16vw,240px);line-height:1;font-weight:800;letter-spacing:-.06em;color:transparent;-webkit-text-stroke:1px #ffffff35;pointer-events:none}
 .outcome-content{width:100%;display:grid;grid-template-columns:1.15fr .85fr;gap:90px;align-items:end;position:relative;z-index:1}
 .outcome-content h2{font-size:clamp(46px,5vw,72px);line-height:1.08;font-weight:600;letter-spacing:-.04em}
 .outcome-content h2 span{color:#d6e7f3}
@@ -228,7 +228,7 @@ h1 span{color:var(--blue)}
   .territory,.programs-stage,.experience,.outcome,.admission,.contact{padding-left:var(--page-gutter);padding-right:var(--page-gutter)}
   .territory{gap:50px}.territory-route{min-height:220px;padding:22px}.route-copy strong{font-size:21px}
   .program-browser{grid-template-columns:220px 1fr}.program-scene{grid-template-columns:1fr}.scene-main{min-height:430px}.scene-detail{min-height:360px}.program-rail button{grid-template-columns:23px 25px 1fr;padding:15px}
-  .experience-track{grid-template-rows:60px auto}.experience-track:before{top:60px}.experience-step{min-height:300px;padding:26px}.experience-step h3{font-size:30px}
+  .experience-track{grid-template-rows:60px auto}.experience-step{min-height:300px;padding:26px}.experience-step h3{font-size:30px}
   .admission-path li>div{grid-template-columns:.8fr 1fr;gap:30px}.admission-path a{grid-column:1/-1}
   .contact{gap:60px}.contact-address{padding-left:35px}
 }
@@ -240,7 +240,7 @@ h1 span{color:var(--blue)}
   .territory:before,.territory:after{display:none}
   .territory{min-height:auto;padding:var(--section-y-deep) var(--page-gutter) calc(var(--section-y-deep) + 16px);grid-template-columns:1fr;gap:65px}.territory h2{font-size:65px}.territory-intro p{max-width:530px}.territory-route:nth-child(2),.territory-route:nth-child(4){transform:translateY(20px)}
   .programs-stage{padding:var(--section-y) var(--page-gutter)}.programs-heading{align-items:flex-start;flex-direction:column;gap:25px;margin-bottom:45px}.programs-heading h2{font-size:55px}.program-browser{grid-template-columns:1fr}.program-rail{display:grid;grid-template-columns:1fr 1fr}.program-rail button{min-height:78px;border-right:1px solid #d2dce8}.program-scene{grid-template-columns:1fr}.scene-main{min-height:440px}.scene-detail{min-height:390px}.compare-row{align-items:flex-start;flex-direction:column;padding:16px 0;gap:4px}
-  .experience{padding:var(--section-y-deep) var(--page-gutter)}.experience-head{grid-template-columns:1fr;gap:25px}.experience-head h2{font-size:62px}.experience-track{margin-top:70px;display:flex;flex-direction:column;gap:1px}.experience-track:before{display:none}.experience-step{min-height:290px}.practice-step,.project,.theory{transform:none}
+  .experience{padding:var(--section-y-deep) var(--page-gutter)}.experience-head{grid-template-columns:1fr;gap:25px}.experience-head h2{font-size:62px}.experience-track{margin-top:70px;display:flex;flex-direction:column;gap:1px}.experience-step{min-height:290px}.practice-step,.project,.theory{transform:none}
   .outcome{min-height:0;padding:calc(var(--section-y) + 60px) var(--page-gutter) var(--section-y)}.outcome-word{top:34px;font-size:16vw}.outcome-content{grid-template-columns:1fr;gap:55px}.outcome-content h2{font-size:52px}
   .admission{padding:var(--section-y-deep) var(--page-gutter)}.admission-header{grid-template-columns:1fr;gap:28px}.admission-header h2{font-size:62px}.admission-path{margin-top:60px}.admission-path li{grid-template-columns:50px 1fr;gap:15px}.admission-path li>div{grid-template-columns:1fr;gap:15px}.admission-path a{grid-column:auto}
   .contact{min-height:700px;padding:var(--section-y) var(--page-gutter);grid-template-columns:1fr;gap:70px}.contact-main h2{font-size:74px}.contact-address{border-left:0;border-top:1px solid #ffffff38;padding:38px 0 0}

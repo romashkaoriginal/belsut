@@ -6,7 +6,7 @@ import './styles.css';
 
 const icons = {route: Route, rail: TrainFront, systems: Network, code: Code2};
 
-const External = ({href, children}) => <a href={href} target="_blank" rel="noreferrer">{children}<ArrowUpRight size={17}/></a>;
+const External = ({href, children, className}) => <a href={href} className={className} target="_blank" rel="noreferrer">{children}<ArrowUpRight size={17}/></a>;
 
 function App() {
   const [menu, setMenu] = useState(false);
@@ -126,7 +126,8 @@ function App() {
             <div className="program-scene" id="program-panel" role="tabpanel" aria-labelledby={`tab-${active}`} key={active}>
               <div className="scene-main">
                 <span className="program-code">{program.code}</span><h3>{program.lead}</h3><p>{program.description}</p>
-                <div className="scene-stats"><div><strong>{program.years}</strong><span>{program.years === 4 ? 'года' : 'лет'} обучения</span></div><div><strong>{program.places}</strong><span>{program.places === 12 ? 'мест' : 'места'} в плане 2026</span></div></div>
+                <div className="scene-stats"><div><strong>{program.years}</strong><span>{program.years === 4 ? 'года' : 'лет'} обучения</span></div><div><strong>{program.places}</strong><span>{program.places === 12 ? 'мест' : 'места'} в плане 2026</span></div><div><strong>{program.score}</strong><span>проходной балл 2026</span></div></div>
+                <External href={source.scores} className="button-link">Все проходные баллы БелГУТ</External>
               </div>
               <div className="scene-detail">
                 <div className="scene-title"><h4>{program.title}</h4><span>{program.qualification}</span></div>
@@ -169,7 +170,7 @@ function App() {
       </section>
     </main>
 
-    <footer className="footer"><a href="#" className="footer-name">БелГУТ <span>Строительный факультет</span></a><div><a href="/sources.html">Источники данных</a><span>Информационный проект · 2026</span></div></footer>
+    <footer className="footer"><a href="#" className="footer-name">БелГУТ <span>Строительный факультет</span></a><div><span>Информационный проект · 2026</span></div></footer>
   </>;
 }
 
