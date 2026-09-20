@@ -228,7 +228,7 @@ h1 span{color:var(--blue)}
   .territory,.programs-stage,.experience,.outcome,.admission,.contact{padding-left:var(--page-gutter);padding-right:var(--page-gutter)}
   .territory{gap:50px}.territory-route{min-height:220px;padding:22px}.route-copy strong{font-size:21px}
   .program-browser{grid-template-columns:220px 1fr}.program-scene{grid-template-columns:1fr}.scene-main{min-height:430px}.scene-detail{min-height:360px}.program-rail button{grid-template-columns:23px 25px 1fr;padding:15px}
-  .experience-track{grid-template-rows:60px auto}.experience-step{min-height:300px;padding:26px}.experience-step h3{font-size:30px}
+  .experience-track{grid-template-rows:60px auto}.experience-track:before{top:60px}.experience-step{min-height:300px;padding:26px}.experience-step h3{font-size:30px}
   .admission-path li>div{grid-template-columns:.8fr 1fr;gap:30px}.admission-path a{grid-column:1/-1}
   .contact{gap:60px}.contact-address{padding-left:35px}
 }
