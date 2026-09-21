@@ -189,7 +189,12 @@ function App() {
       </section>
     </main>
 
-    <footer className="footer"><a href="#" className="footer-name">БелГУТ <span>Строительный факультет</span></a><div><span>Информационный проект · 2026</span></div></footer>
+    <footer className="footer" aria-label="Информация о проекте">
+      <p className="footer-credits">UI: Траньков Р.С. <span aria-hidden="true">|</span> UX: Конча А.В.</p>
+      <p className="footer-students">Разработано студентами Строительного факультета</p>
+      <a className="footer-feedback" href="https://t.me/Romkayoy" target="_blank" rel="noreferrer">Телеграм для обратной связи: @Romkayoy</a>
+      <p className="footer-copyright">© УО БелГУТ {new Date().getFullYear()}</p>
+    </footer>
   </>;
 }
 
