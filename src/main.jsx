@@ -97,7 +97,6 @@ function App() {
         </div>
         <figure className="hero-art" ref={heroArt}>
           <img src="/assets/bridge.webp" alt="Концептуальная инженерная модель вантового моста" width="1536" height="1024" fetchPriority="high"/>
-          <figcaption>Концептуальная инженерная визуализация</figcaption>
         </figure>
       </section>
 
